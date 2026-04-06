@@ -14,20 +14,25 @@
   </head>
   <body>
     <main class="page-shell">
+      <div class="topbar">
+        <button id="language-toggle" class="language-toggle" type="button" aria-label="Switch language">
+          <span id="language-toggle-label">EN</span>
+        </button>
+      </div>
+
       <section class="hero">
         <div>
-          <p class="eyebrow">HW2 · Robot Advisor</p>
-          <h1>Strategy mNAV 儀表板</h1>
-          <p class="hero-copy">
-            <strong>Strategy（MSTR）</strong> 的 mNAV、MSTR 股價、BTC 價格與
-            每股 BTC NAV 即時概況。
+          <p class="eyebrow" id="eyebrow">HW2 · Robot Advisor</p>
+          <h1 id="page-title">Strategy mNAV 儀表板</h1>
+          <p class="hero-copy" id="hero-copy">
+            <strong>Strategy（MSTR）</strong> 的 mNAV、MSTR 股價、BTC 價格與每股 BTC NAV 即時概況。
           </p>
         </div>
         <div class="hero-focus">
-          <span class="hero-focus-label">觀察公司</span>
+          <span class="hero-focus-label" id="hero-focus-label">觀察公司</span>
           <span class="hero-focus-sub" id="hero-company">Strategy (MSTR)</span>
           <strong class="hero-focus-value skeleton" id="hero-mnav">Loading</strong>
-          <span class="hero-focus-label">最新 mNAV</span>
+          <span class="hero-focus-label" id="hero-focus-caption">最新 mNAV</span>
           <span class="hero-focus-sub" id="hero-date">等待最新資料</span>
         </div>
       </section>
@@ -35,8 +40,8 @@
       <section class="overview-panel">
         <article class="panel gauge-panel">
           <div class="gauge-card">
-            <p class="panel-kicker">MNAV 指標</p>
-            <h2>目前估值位置</h2>
+            <p class="panel-kicker" id="gauge-kicker">mNAV 指標</p>
+            <h2 id="gauge-title">目前估值位置</h2>
             <div class="gauge-wrap">
               <div class="gauge-meter">
                 <div class="gauge-ring"></div>
@@ -53,24 +58,24 @@
         </article>
 
         <article class="panel summary-panel">
-          <p class="panel-kicker">Gemini 區塊</p>
-          <h2>即時重點</h2>
+          <p class="panel-kicker" id="summary-kicker">Gemini 摘要</p>
+          <h2 id="summary-title">即時重點</h2>
           <p id="ai-summary" class="summary-copy">Loading summary...</p>
           <div class="summary-top-grid">
             <div class="summary-chip">
-              <span class="source-label">股價</span>
+              <span class="source-label" id="stock-price-label">股價</span>
               <strong id="stock-price" class="summary-chip-value skeleton">Loading</strong>
             </div>
             <div class="summary-chip">
-              <span class="source-label">每股 BTC NAV</span>
+              <span class="source-label" id="nav-per-share-label">每股 BTC NAV</span>
               <strong id="nav-per-share" class="summary-chip-value skeleton">Loading</strong>
             </div>
             <div class="summary-chip">
-              <span class="source-label">市值</span>
+              <span class="source-label" id="market-cap-label">市值</span>
               <strong id="market-cap" class="summary-chip-value skeleton">Loading</strong>
             </div>
             <div class="summary-chip">
-              <span class="source-label">相對 NAV</span>
+              <span class="source-label" id="relative-nav-label">相對 NAV</span>
               <strong id="relative-nav" class="summary-chip-value skeleton">Loading</strong>
             </div>
           </div>
@@ -80,32 +85,33 @@
       <section class="panel chart-panel">
         <div class="panel-head">
           <div>
-            <p class="panel-kicker">時間序列</p>
-            <h2>mNAV、MSTR 股價與 BTC 價格</h2>
+            <p class="panel-kicker" id="chart-kicker">時間序列</p>
+            <h2 id="chart-title">mNAV、MSTR 股價與 BTC 價格</h2>
           </div>
           <div class="chart-legend">
             <span class="legend-chip">
               <span class="legend-dot" id="legend-mnav"></span>
-              <span>mNAV</span>
+              <span id="legend-mnav-label">mNAV</span>
             </span>
             <span class="legend-chip">
               <span class="legend-dot" id="legend-stock"></span>
-              <span>MSTR 股價</span>
+              <span id="legend-stock-label">MSTR 股價</span>
             </span>
             <span class="legend-chip">
               <span class="legend-dot" id="legend-btc"></span>
-              <span>BTC 價格</span>
+              <span id="legend-btc-label">BTC 價格</span>
             </span>
           </div>
         </div>
         <div class="range-selector" aria-label="時間區間選擇">
-          <button class="range-button active" data-range="1W" type="button">1週</button>
-          <button class="range-button" data-range="1M" type="button">1個月</button>
-          <button class="range-button" data-range="3M" type="button">3個月</button>
-          <button class="range-button" data-range="6M" type="button">半年</button>
-          <button class="range-button" data-range="1Y" type="button">1年</button>
-          <button class="range-button" data-range="2Y" type="button">2年</button>
-          <button class="range-button" data-range="5Y" type="button">5年</button>
+          <button class="range-button" data-range="1D" type="button" id="range-1d">1日</button>
+          <button class="range-button active" data-range="1W" type="button" id="range-1w">1週</button>
+          <button class="range-button" data-range="1M" type="button" id="range-1m">1個月</button>
+          <button class="range-button" data-range="3M" type="button" id="range-3m">3個月</button>
+          <button class="range-button" data-range="6M" type="button" id="range-6m">半年</button>
+          <button class="range-button" data-range="1Y" type="button" id="range-1y">1年</button>
+          <button class="range-button" data-range="2Y" type="button" id="range-2y">2年</button>
+          <button class="range-button" data-range="5Y" type="button" id="range-5y">5年</button>
         </div>
         <div class="chart-wrap">
           <canvas id="indicator-chart" aria-label="mNAV、股價與 BTC 圖表"></canvas>
@@ -114,39 +120,51 @@
       </section>
 
       <section class="panel supplement-panel">
-        <p class="panel-kicker">補充數據</p>
-        <h2>結構資料</h2>
-        <div class="mini-grid">
-          <div class="mini-card">
-            <span class="source-label">持有 BTC</span>
-            <strong id="treasury-btc" class="mini-value skeleton">Loading</strong>
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker" id="trend-kicker">趨勢表格</p>
+            <h2 id="trend-title">mNAV 趨勢表</h2>
           </div>
-          <div class="mini-card">
-            <span class="source-label">稀釋後股數</span>
-            <strong id="diluted-shares" class="mini-value skeleton">Loading</strong>
-          </div>
-          <div class="mini-card">
-            <span class="source-label">最新 mNAV</span>
-            <strong id="detail-mnav" class="mini-value skeleton">Loading</strong>
-          </div>
-          <div class="mini-card">
-            <span class="source-label">最新交易日</span>
-            <strong id="detail-date" class="mini-value skeleton">Loading</strong>
-          </div>
-          <div class="mini-card">
-            <span class="source-label">近 1 週 mNAV</span>
-            <strong id="weekly-change" class="mini-value skeleton">Loading</strong>
-          </div>
-          <div class="mini-card">
-            <span class="source-label">近 1 月 mNAV</span>
-            <strong id="monthly-change" class="mini-value skeleton">Loading</strong>
+          <div class="table-summary">
+            <div class="table-summary-chip">
+              <span class="source-label" id="treasury-btc-label">持有 BTC</span>
+              <strong id="treasury-btc" class="summary-chip-value skeleton">Loading</strong>
+            </div>
+            <div class="table-summary-chip">
+              <span class="source-label" id="diluted-shares-label">稀釋後股數</span>
+              <strong id="diluted-shares" class="summary-chip-value skeleton">Loading</strong>
+            </div>
+            <div class="table-summary-chip">
+              <span class="source-label" id="detail-date-label">最新交易日</span>
+              <strong id="detail-date" class="summary-chip-value skeleton">Loading</strong>
+            </div>
           </div>
         </div>
+        <div class="trend-table-wrap">
+          <table class="trend-table">
+            <thead>
+              <tr>
+                <th scope="col" id="table-head-date">日期</th>
+                <th scope="col">mNAV</th>
+                <th scope="col" id="table-head-change">較前日變化</th>
+                <th scope="col" id="table-head-stock">MSTR 股價</th>
+                <th scope="col" id="table-head-btc">BTC 價格</th>
+                <th scope="col" id="table-head-marketcap">市值</th>
+              </tr>
+            </thead>
+            <tbody id="trend-table-body">
+              <tr>
+                <td colspan="6" class="trend-table-empty">Loading trend data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-footnote" id="table-footnote">每列顯示單日 mNAV 估值與前一交易日的變化，方便快速比較股價與 BTC 驅動。</p>
       </section>
 
       <section class="panel error-panel hidden" id="error-panel" role="alert">
-        <p class="panel-kicker">資料狀態</p>
-        <h2>暫時無法取得即時資料</h2>
+        <p class="panel-kicker" id="error-kicker">資料狀態</p>
+        <h2 id="error-title">暫時無法取得即時資料</h2>
         <p id="error-message"></p>
       </section>
     </main>

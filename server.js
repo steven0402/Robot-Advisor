@@ -5,6 +5,39 @@ const { getCachedIndicatorData } = require("./lib/cache");
 const { getIndicatorData } = require("./lib/indicator-data");
 const { createSummaryResponse } = require("./lib/gemini-summary");
 
+function loadEnvFile(filename) {
+  const filePath = path.join(__dirname, filename);
+
+  if (!fs.existsSync(filePath)) {
+    return;
+  }
+
+  const content = fs.readFileSync(filePath, "utf8");
+
+  content.split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+
+    if (!trimmed || trimmed.startsWith("#")) {
+      return;
+    }
+
+    const separatorIndex = trimmed.indexOf("=");
+
+    if (separatorIndex === -1) {
+      return;
+    }
+
+    const key = trimmed.slice(0, separatorIndex).trim();
+    const value = trimmed.slice(separatorIndex + 1).trim();
+
+    if (!process.env[key]) {
+      process.env[key] = value;
+    }
+  });
+}
+
+loadEnvFile(".env.local");
+
 const rootDir = __dirname;
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || "127.0.0.1";
@@ -59,7 +92,8 @@ const server = http.createServer(async (req, res) => {
   if (requestUrl.pathname === "/api/summary") {
     try {
       const data = await getCachedIndicatorData(getIndicatorData);
-      const summaryPayload = await createSummaryResponse(data);
+      const language = requestUrl.searchParams.get("lang") === "en" ? "en" : "zh-Hant";
+      const summaryPayload = await createSummaryResponse(data, language);
       sendJson(res, 200, summaryPayload);
     } catch (error) {
       sendJson(res, 500, {

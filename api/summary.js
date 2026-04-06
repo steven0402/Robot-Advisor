@@ -16,7 +16,8 @@ module.exports = async (req, res) => {
 
   try {
     const data = await getCachedIndicatorData(getIndicatorData);
-    const summaryPayload = await createSummaryResponse(data);
+    const language = req.query?.lang === "en" ? "en" : "zh-Hant";
+    const summaryPayload = await createSummaryResponse(data, language);
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
     res.status(200).end(JSON.stringify(summaryPayload));
