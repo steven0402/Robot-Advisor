@@ -151,6 +151,7 @@ let chart;
 let indicatorData;
 let activeRange = "1W";
 let currentLanguage = localStorage.getItem("robot-advisor-language") || "zh-Hant";
+const summaryCacheByLanguage = {};
 
 function copy() {
   return COPY[currentLanguage];
@@ -535,6 +536,10 @@ async function loadGeneratedSummary() {
 }
 
 async function fetchSummaryPayload() {
+  if (summaryCacheByLanguage[currentLanguage]?.usedLlm) {
+    return summaryCacheByLanguage[currentLanguage];
+  }
+
   const response = await fetch(
     `/api/summary?lang=${encodeURIComponent(currentLanguage === "en" ? "en" : "zh-Hant")}`
   );
@@ -542,6 +547,10 @@ async function fetchSummaryPayload() {
 
   if (!response.ok) {
     throw new Error(payload.details || payload.error || "Unknown error");
+  }
+
+  if (payload.usedLlm) {
+    summaryCacheByLanguage[currentLanguage] = payload;
   }
 
   return payload;
@@ -577,7 +586,12 @@ function bindLanguageToggle() {
 
     if (indicatorData) {
       updateView();
-      await loadGeneratedSummary();
+      if (summaryCacheByLanguage[currentLanguage]?.usedLlm) {
+        document.getElementById("ai-summary").textContent =
+          summaryCacheByLanguage[currentLanguage].text;
+      } else {
+        await loadGeneratedSummary();
+      }
     }
   });
 }

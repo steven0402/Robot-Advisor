@@ -19,7 +19,13 @@ module.exports = async (req, res) => {
     const language = req.query?.lang === "en" ? "en" : "zh-Hant";
     const summaryPayload = await createSummaryResponse(data, language);
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
+    if (summaryPayload.usedLlm) {
+      res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
+    } else if (summaryPayload.warning?.includes("429")) {
+      res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=120");
+    } else {
+      res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=600");
+    }
     res.status(200).end(JSON.stringify(summaryPayload));
   } catch (error) {
     res.setHeader("Content-Type", "application/json; charset=utf-8");
