@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Robot Advisor | DAT.co 指標儀表板</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">HW2 · Robot Advisor</p>
+          <h1>Strategy mNAV 儀表板</h1>
+          <p class="hero-copy">
+            <strong>Strategy（MSTR）</strong> 的 mNAV、MSTR 股價、BTC 價格與
+            每股 BTC NAV 即時概況。
+          </p>
+        </div>
+        <div class="hero-focus">
+          <span class="hero-focus-label">觀察公司</span>
+          <span class="hero-focus-sub" id="hero-company">Strategy (MSTR)</span>
+          <strong class="hero-focus-value skeleton" id="hero-mnav">Loading</strong>
+          <span class="hero-focus-label">最新 mNAV</span>
+          <span class="hero-focus-sub" id="hero-date">等待最新資料</span>
+        </div>
+      </section>
+
+      <section class="overview-panel">
+        <article class="panel gauge-panel">
+          <div class="gauge-card">
+            <p class="panel-kicker">MNAV 指標</p>
+            <h2>目前估值位置</h2>
+            <div class="gauge-wrap">
+              <div class="gauge-meter">
+                <div class="gauge-ring"></div>
+                <div class="gauge-cover"></div>
+                <div class="gauge-needle" id="gauge-needle"></div>
+                <div class="gauge-hub"></div>
+              </div>
+              <div class="gauge-readout">
+                <strong id="gauge-value" class="gauge-value skeleton">Loading</strong>
+                <span id="gauge-status" class="gauge-status skeleton">Loading</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel summary-panel">
+          <p class="panel-kicker">Gemini 區塊</p>
+          <h2>即時重點</h2>
+          <p id="ai-summary" class="summary-copy">Loading summary...</p>
+          <div class="summary-top-grid">
+            <div class="summary-chip">
+              <span class="source-label">股價</span>
+              <strong id="stock-price" class="summary-chip-value skeleton">Loading</strong>
+            </div>
+            <div class="summary-chip">
+              <span class="source-label">每股 BTC NAV</span>
+              <strong id="nav-per-share" class="summary-chip-value skeleton">Loading</strong>
+            </div>
+            <div class="summary-chip">
+              <span class="source-label">市值</span>
+              <strong id="market-cap" class="summary-chip-value skeleton">Loading</strong>
+            </div>
+            <div class="summary-chip">
+              <span class="source-label">相對 NAV</span>
+              <strong id="relative-nav" class="summary-chip-value skeleton">Loading</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">時間序列</p>
+            <h2>mNAV、MSTR 股價與 BTC 價格</h2>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-chip">
+              <span class="legend-dot" id="legend-mnav"></span>
+              <span>mNAV</span>
+            </span>
+            <span class="legend-chip">
+              <span class="legend-dot" id="legend-stock"></span>
+              <span>MSTR 股價</span>
+            </span>
+            <span class="legend-chip">
+              <span class="legend-dot" id="legend-btc"></span>
+              <span>BTC 價格</span>
+            </span>
+          </div>
+        </div>
+        <div class="range-selector" aria-label="時間區間選擇">
+          <button class="range-button active" data-range="1W" type="button">1週</button>
+          <button class="range-button" data-range="1M" type="button">1個月</button>
+          <button class="range-button" data-range="3M" type="button">3個月</button>
+          <button class="range-button" data-range="6M" type="button">半年</button>
+          <button class="range-button" data-range="1Y" type="button">1年</button>
+          <button class="range-button" data-range="2Y" type="button">2年</button>
+          <button class="range-button" data-range="5Y" type="button">5年</button>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="indicator-chart" aria-label="mNAV、股價與 BTC 圖表"></canvas>
+        </div>
+        <p class="chart-footnote" id="chart-footnote">等待指標資料。</p>
+      </section>
+
+      <section class="panel supplement-panel">
+        <p class="panel-kicker">補充數據</p>
+        <h2>結構資料</h2>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <span class="source-label">持有 BTC</span>
+            <strong id="treasury-btc" class="mini-value skeleton">Loading</strong>
+          </div>
+          <div class="mini-card">
+            <span class="source-label">稀釋後股數</span>
+            <strong id="diluted-shares" class="mini-value skeleton">Loading</strong>
+          </div>
+          <div class="mini-card">
+            <span class="source-label">最新 mNAV</span>
+            <strong id="detail-mnav" class="mini-value skeleton">Loading</strong>
+          </div>
+          <div class="mini-card">
+            <span class="source-label">最新交易日</span>
+            <strong id="detail-date" class="mini-value skeleton">Loading</strong>
+          </div>
+          <div class="mini-card">
+            <span class="source-label">近 1 週 mNAV</span>
+            <strong id="weekly-change" class="mini-value skeleton">Loading</strong>
+          </div>
+          <div class="mini-card">
+            <span class="source-label">近 1 月 mNAV</span>
+            <strong id="monthly-change" class="mini-value skeleton">Loading</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel error-panel hidden" id="error-panel" role="alert">
+        <p class="panel-kicker">資料狀態</p>
+        <h2>暫時無法取得即時資料</h2>
+        <p id="error-message"></p>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
